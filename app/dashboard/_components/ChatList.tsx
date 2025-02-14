@@ -1,24 +1,43 @@
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
 
-export const ChatList = ({ userData }: { userData: (typeof friends)[number] }) => {
+export const ChatList = ({
+  userData,
+}: {
+  userData: (typeof friends)[number]
+}) => {
   return (
-    <div
+    <Link
+      href={`/dashboard/${userData.id}`}
       className={cn(
         'flex items-center cursor-pointer hover:bg-primary/10 rounded-[10px] p-2 gap-2',
         userData.id === 1 && 'bg-primary/10'
       )}
     >
-      <div className='w-10 h-10 rounded-full overflow-hidden'>
-        {/* <Image src={image} alt={name} width={40} height={40} /> */}
-
-        <div className='size-full rounded-full bg-gray-300'></div>
-      </div>
+      {userData?.profileImage ? (
+        <Image
+          src={userData?.profileImage || ''}
+          alt={userData?.name}
+          width={40}
+          height={40}
+          className='rounded-full size-10'
+        />
+      ) : (
+        <div className='w-10 h-10 rounded-full overflow-hidden'>
+          <div className='size-full rounded-full bg-gray-300'></div>
+        </div>
+      )}
       <div className='flex-1 '>
-        <div className='text-sm font-medium capitalize'>{userData.name}</div>
-        <div className='text-sm text-gray-500'>{userData.lastMessage}</div>
+        <div className='text-sm font-medium capitalize'>
+          {userData?.name || 'vijay'}
+        </div>
+        <div className='text-sm text-gray-500'>
+          {userData?.lastMessage || 'Hello, how are you?'}
+        </div>
       </div>
-      <div className='text-sm text-gray-500'>{userData.time}</div>
-    </div>
+      <div className='text-sm text-gray-500'>{userData?.time || '12:00'}</div>
+    </Link>
   )
 }
 
@@ -42,7 +61,6 @@ export const friends = [
     time: '01:00',
   },
 ]
-
 
 export const chatMessages = [
   {
@@ -81,4 +99,3 @@ export const chatMessages = [
     receiverId: 1,
   },
 ]
-

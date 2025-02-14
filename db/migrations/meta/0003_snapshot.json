@@ -1,6 +1,6 @@
 {
-  "id": "5f77fdda-36cb-4c77-8bed-37d0fd265bdc",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "4cf5b04f-a173-4fa6-96a3-54ea2ef9136d",
+  "prevId": "36ffc7fa-7892-490d-a90e-dec7489b0691",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -389,6 +389,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "profile_image": {
+          "name": "profile_image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "password": {
           "name": "password",
