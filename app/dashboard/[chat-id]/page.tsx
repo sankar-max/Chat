@@ -10,7 +10,6 @@ export default async function ChatPage({
 }: {
   params: Promise<{ ['chat-id']: string }>
 }) {
-
   const chatId = (await params)?.['chat-id']
 
   const { data } = await getChat(chatId)
@@ -20,9 +19,9 @@ export default async function ChatPage({
     <div className='flex flex-col flex-1 overflow-hidden  bg-gray-100/5 rounded-2xl p-2'>
       <LogoutLink>out</LogoutLink>
       <ChatHeader user={user} />
-      <ChatSection />
+      <ChatSection data={data} />
 
-      <ChatInput  />
+      <ChatInput />
     </div>
   )
 }

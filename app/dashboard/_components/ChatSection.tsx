@@ -6,12 +6,13 @@ import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import { socket } from '@/app/socket'
 import { useEffect, useState } from 'react'
 
-export const ChatSection = () => {
+export const ChatSection = ({ data }: { data: chats }) => {
   const { isAuthenticated, getUser } = useKindeBrowserClient()
   const user = getUser()
   const [messages, setMessages] = useState<chats>([])
 
   useEffect(() => {
+    if (!user?.id) return
     socket.emit('get:messages', user.id)
 
     socket.on('add:message', (messages) => {
@@ -20,13 +21,13 @@ export const ChatSection = () => {
     return () => {
       socket.off('add:message')
     }
-  }, [user.id])
+  }, [user?.id])
 
   if (!isAuthenticated) return null
   return (
     <div className='flex flex-1 p-1 py-3 flex-col scroll-p-1 scroll-m-1 overflow-auto'>
       <div className='flex flex-col gap-2'>
-        {messages?.map((message) => (
+        {data?.map((message) => (
           <div
             className={cn(
               'flex   items-center gap-0.5',

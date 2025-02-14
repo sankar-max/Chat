@@ -1,7 +1,7 @@
 import { createServer } from 'node:http'
 import next from 'next'
 import { Server } from 'socket.io'
-import { getChat, getUsers, sendMessage } from '@/app/actions'
+// import { getChat, getUsers, sendMessage } from '@/app/actions'
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
 const port = 5050
@@ -16,18 +16,18 @@ app.prepare().then(() => {
 
   io.on('connection', (socket) => {
     socket.on('get:users', async () => {
-      const { data } = await getUsers()
-      io.emit('receive:users', data)
+      // const { data } = await getUsers()
+      // io.emit('receive:users', data)
     })
 
-    socket.emit('get:messages', async (chatterId:string) => {
-      const { data } = await getChat(chatterId)
-      return data
+    socket.emit('get:messages', async (chatterId) => {
+      // const { data } = await getChat(chatterId)
+      // return data
     })
 
     socket.on('add:message', async (message) => {
-      const { data } = await sendMessage(message)
-      io.emit('get:messages', data)
+      // const { data } = await sendMessage(message)
+      // io.emit('get:messages', data)
     })
   })
 
