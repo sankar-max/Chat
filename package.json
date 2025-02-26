@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon server.mjs --turbopack -p 5050",
+    "dev": "NODE_OPTIONS='--loader ts-node/esm --trace-warnings --no-warnings' ts-node server.mts",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "next lint",

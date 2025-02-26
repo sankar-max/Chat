@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { use, useEffect, useState } from 'react'
-import { socket } from './socket'
+import { use, useEffect, useState } from "react"
+import { socket } from "./socket"
 
 export default function Home() {
   const [isConnected, setIsConnected] = useState(false)
-  const [transport, setTransport] = useState('N/A')
+  const [transport, setTransport] = useState("N/A")
 
   const [onlineUsers, setOnlineUsers] = useState<
     { id: string; name: string }[]
@@ -20,41 +20,41 @@ export default function Home() {
       setIsConnected(true)
       setTransport(socket.io.engine.transport.name)
 
-      socket.io.engine.on('upgrade', (transport) => {
+      socket.io.engine.on("upgrade", (transport) => {
         setTransport(transport.name)
       })
     }
 
     function onDisconnect() {
       setIsConnected(false)
-      setTransport('N/A')
+      setTransport("N/A")
     }
 
-    socket.on('connect', onConnect)
-    socket.on('disconnect', onDisconnect)
+    socket.on("connect", onConnect)
+    socket.on("disconnect", onDisconnect)
 
     return () => {
-      socket.off('connect', onConnect)
-      socket.off('disconnect', onDisconnect)
+      socket.off("connect", onConnect)
+      socket.off("disconnect", onDisconnect)
     }
   }, [])
 
   useEffect(() => {
-    socket.emit('user:online', { name: 'sankar', id: '123' })
+    socket.emit("get:users", { name: "sankar", id: "123" })
 
-    socket.on('get:online', (user) => {
+    socket.on("receive:users", (user) => {
       // console.log('user', user)
       setOnlineUsers(user)
     })
     return () => {
-      socket.off('get:online')
-      socket.off('user:online')
+      socket.off("get:online")
+      socket.off("user:online")
     }
   }, [])
   // console.log('client', onlineUsers)
   return (
     <div>
-      <p>Status: {isConnected ? 'connected' : 'disconnected'}</p>
+      <p>Status: {isConnected ? "connected" : "disconnected"}</p>
       <p>Transport: {transport}</p>
       <p>Online Users: {onlineUsers.length}</p>
 
